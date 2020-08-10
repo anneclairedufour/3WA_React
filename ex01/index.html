@@ -48,19 +48,16 @@
 
         class App extends React.Component{
 
-            constructor(choice) {
-                super(choice);
-                this.choice = false;
-            }
-
             render(){
                 return (
-                    <div>{ this.choice ? <ListKnight/> : <ListDragon/> }</div>
+                    <div>
+                        { this.props.choice == "dragon" ? <ListDragon/> : <ListKnight/> }
+                    </div>
                 )
             }
         }
         ReactDOM.render(
-            <App />,
+            <App choice = "knight"/>,
             document.getElementById('root')
         );
     </script>
