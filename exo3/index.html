@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>Hello React</title>
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+    <style>
+        .heading{
+            color: purple;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const container = document.getElementById('root');
+
+        class Button extends React.Component {
+            clickHandler = () =>{
+                this.props.onClickFunction(this.props.incrementValue);
+            };
+
+            render(){
+                return (
+                    <button onClick={this.clickHandler}>Start (+{this.props.incrementValue})</button>
+                );
+            }
+        }
+
+        class Counter extends React.Component {
+            constructor(props){
+                super(props);
+                // lié la méthode au this de la classe
+                //this.click = this.click.bind(this);
+
+                this.state = {
+                    counter1: 0,
+                    //counter2: 0
+                }
+            }
+
+            // arrow function
+            incrementCounter = (incrementValue) => {
+                this.setState((prevState) => ({
+                    counter1: prevState.counter1 + this.props.incrementValue
+                }));
+            }
+            
+            render(){
+                return (
+                    <div>
+                        <Button incrementValue={1} onClickFunction={this.incrementCounter} />
+                        <button onClick={this.stop}>Stop</button>
+                        <button onClick={this.reset}>Reset</button>
+                        
+                        <div className="counter1">{this.state.counter1}</div>
+                        
+                        <Button incrementValue={2} onClickFunction={this.incrementCounter} />
+                        <button onClick={this.stop}>Stop</button>
+                        
+                        <div className="counter2">{this.props.counter2}</div>
+                    </div>
+                )
+            }
+        }
+
+        ReactDOM.render(
+            <Counter />,
+            container
+        );
+    </script>
+</body>
+
+</html>
