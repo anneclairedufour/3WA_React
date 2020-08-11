@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Hello React</title>
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <!-- permet de compiler le JSX -->
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+    <style>
+        .app__post{
+            color: purple;
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const colors = [
+            "#1e88e5",
+            "#6ab7ff",
+            "#005cb2",
+            "#1976d2"
+        ];
+
+        const tableWidth  = 4;
+        const tableHeight = 4;
+
+        let allSquares = [];
+        let j = 0;
+
+        for (var i = 0 ; i < tableWidth * tableHeight - 1 ; i ++) {
+            var newElement = {
+                key : i,
+                color : colors[j]
+            }
+
+            allSquares.push(newElement);
+
+            (j < colors.length - 1) ? j ++ : j = 0;
+        }
+
+        console.log(allSquares);
+
+        class Square extends React.Component{
+            constructor(props) {
+                super(props);
+            }
+
+            render(){
+                const componentStyle = {
+                    backgroundColor: td.color,
+                    height: "3rem",
+                    width: "3rem",
+                    borderColor: "blue",
+                    borderWidth: "medium"
+                }
+
+                return (
+                    <td className="square" style={componentStyle}>{td.key}</td>
+                )
+            }
+        }
+
+        class Checkerboard extends React.Component {
+            constructor(props) {
+                super(props);
+            }
+
+            render() {
+                return (
+                    <div>
+                        <table>
+                            {
+                                
+                                return (<Square/>)
+                            }
+                        </table>
+                    </div>
+                )
+            }
+        }
+
+        ReactDOM.render(
+            <Checkerboard/>,
+            document.getElementById('root')
+        )
+
+        /*for (i = 1 ; i < tableWidth ; i++) {
+
+
+
+            for (j = 1 ; j < tableHeight ; j++) {
+
+            }
+        }
+        }*/
+
+        /*
+        <div>
+            <table>
+                <tr>
+                    <Square/>
+                    <Square/>
+                    <Square/>
+                    <Square/>
+                </tr>
+                <tr>
+                    <Square/>
+                    <Square/>
+                    <Square/>
+                    <Square/>
+                </tr>
+                <tr>
+                    <Square/>
+                    <Square/>
+                    <Square/>
+                    <Square/>
+                </tr>
+                <tr>
+                    <Square/>
+                    <Square/>
+                    <Square/>
+                    <Square/>
+                </tr>
+            </table>
+        </div>
+        */
+    </script>
+</body>
+
+</html>
