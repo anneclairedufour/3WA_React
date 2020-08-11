@@ -64,7 +64,7 @@
             }
         }
 
-        class Checkerboard extends React.Component {
+        /*class Checkerboard extends React.Component {
             constructor(props) {
                 super(props);
             }
@@ -74,29 +74,24 @@
                     <div>
                         <table>
                             {
-                                
-                                return (<Square/>)
+                                for (i = 1 ; i < tableHeight ; i++) {
+                                    <tr>
+                                        for (j = 1 ; j <tr tableWidth ; j++) {
+                                            return (<Square/>)
+                                        }
+                                    </tr>
+                                }
                             }
                         </table>
                     </div>
                 )
             }
-        }
+        }*/
 
         ReactDOM.render(
             <Checkerboard/>,
             document.getElementById('root')
         )
-
-        /*for (i = 1 ; i < tableWidth ; i++) {
-
-
-
-            for (j = 1 ; j < tableHeight ; j++) {
-
-            }
-        }
-        }*/
 
         /*
         <div>
