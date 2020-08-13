@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Hello React</title>
+  <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+
+  <!-- permet de compiler le JSX -->
+  <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+    crossorigin="anonymous">
+  <style>
+    .heading{
+          color: purple;
+      }
+      .error{
+        font-size: small;
+        color:red;
+      }
+  </style>
+</head>
+
+<body>
+<div id="root"></div>
+<script type="text/babel">
+const decimalToBinary = (num) => {
+    if(num == '') return 0 ;
+
+    let b = [];
+    
+    while (num > 0){
+      let r = num % 2;
+      b.push(r);
+
+      num = Math.trunc( num / 2 );
+    }
+
+    return b.reverse().join('');
+}
+
+const binaryToDecimal = (bnum) => {
+  if(bnum == '') return 0 ;
+
+  return bnum.split('').reverse()
+          .map((b, i) => parseInt(b)*2**i )
+          .reduce((acc, curr) => acc + curr);
+}
+
+const isBinary = (number) => {
+  let isB = true;
+  if(number !== ''){
+    for(let b of String(number)){
+      if( b != '1' && b != '0') {
+        isB = false;
+        break;
+      }
+    }
+  }
+
+  return isB;
+}
+
+const tryConvert = (number) => Number.isNaN(number) ? number : false;
+
+const ErrorMessage = (props) => <p className="error">{props.message}</p>;
+
+class BaseNumberInput extends React.Component{
+  constructor(props) {
+    super(props);
+    this.state = { error : false };
+  }
+
+  handleChange(e) {
+
+    const number = e.target.value;
+
+    this.setState((state) => ({ error : false }) )
+
+    if( this.props.base == 'binary' && isBinary(number) == false){ 
+      this.props.onChangeBase(0, this.props.base);
+      this.setState({error : true});
+    }
+    else{
+      this.setState({error : false});
+      this.props.onChangeBase(number, this.props.base);
+    }
+  }
+
+  render(){
+    const number = this.props.number;
+
+    return (
+      <div className="base form-group">
+        {this.state.error ? <p className="error">Error</p> : null }
+        <label>Number: {this.props.base} </label>
+        <input 
+          value={number}
+          onChange={(e) => this.handleChange(e)}
+          className="form-control" 
+        />
+      </div>
+    );
+  }
+}
+
+class App extends React.Component{
+  constructor(props){
+    super(props);
+
+    this.state = {
+      decimal : 0,
+      binary : 0,
+      error : false
+    }
+
+  }
+
+  handleChange(number, b) {
+
+    if (b == 'decimal')
+      this.setState({
+        decimal : number,
+        binary : decimalToBinary(number)
+      })
+    
+    if (b == 'binary')
+        this.setState({
+          decimal : binaryToDecimal(number),
+          binary : number
+        })
+  }
+
+  render(){
+
+    const decimal = this.state.decimal;
+    // const binary =  this.state.binary;
+
+    return (
+      <div className="container">
+        { decimal === null ? <ErrorMessage message="is not a number" /> : 
+        <div className="row">
+          <div className="col-md-8">
+          <BaseNumberInput number={decimal} base="decimal" onChangeBase={(e, b) => this.handleChange(e, b)} />
+          <BaseNumberInput number={binary} base="binary" onChangeBase={(e, b) => this.handleChange(e, b)} />
+          </div>
+        </div>
+        }
+      </div>
+    )
+  }
+}
+
+ReactDOM.render(
+  <App />,
+  document.getElementById('root')
+);
+
+</script>
+</body>
+
+</html>

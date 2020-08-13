@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Hello React</title>
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+
+    <!-- permet de compiler le JSX -->
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <style>
+        .heading{
+            color: purple;
+        }
+        .app_btn, .app__tab{
+            margin-top: 15%;
+        }
+        small{ font-size : .25rem; }
+    </style>
+
+</head>
+<body>
+<div id="app"></div>
+
+<script type="text/babel">
+const app = document.getElementById('app');
+
+class Elems extends React.Component{
+    constructor(props) {
+        super(props);
+    }
+   
+    handler = (el, e) => {
+        e.preventDefault;
+        this.props.remove(el);
+    }
+
+    render(){
+
+        return (
+            <tbody>
+            {this.props.elems.map((el, i) =>{
+                return (
+                    <tr key={el.key}>
+                        <th scope="row">{el.key}</th>
+                        <td ><small>{el.hash}</small></td>
+                        <td><button onClick={(e) => this.handler(el.key, e)}  className="btn btn-danger">Delete</button></td>
+                    </tr>
+                )
+            })}
+            </tbody>
+        );
+    }
+}
+
+class App extends React.Component{
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            elems : []
+        };
+    }
+
+    generateHash() {
+        return [...Array(5).keys()].map( () =>
+            Math.random().toString(16)
+        ).join('')
+    }
+
+    generate = () => {
+        let elems = this.state.elems;
+        
+        elems.push( {
+            key : Math.random() + "",
+            hash : this.generateHash()
+        })
+
+        this.setState({elems : elems });
+    }
+
+    removeHandler = (key) => {
+        
+        const elems = this.state.elems.filter( elem => {
+            if( key != elem.key ) return true;
+        });
+
+        this.setState({elems : elems })
+    }
+
+    render(){
+        return (
+            <div className="container">
+                <div className="row">
+                    <div className="col-md-3">
+                        <button onClick={this.generate} className="btn btn-primary app_btn" >Generate hash</button>
+                    </div>
+                    <div className="col-md-9">
+                        <table className="table table-hover table-dark">
+                            <thead>
+                                <tr>
+                                    <th scope="col">key</th>
+                                    <th scope="col">Hash</th>
+                                    <th scope="col">Delete</th>
+                                </tr>
+                            </thead>
+                            <Elems elems={this.state.elems} remove={this.removeHandler} />  
+                        </table>
+                    </div>
+                </div>
+            </div>
+        )
+    }
+}
+
+ReactDOM.render(
+  <App />,
+  app
+);
+
+</script>
+</body>
+
+</html>

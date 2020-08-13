@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Hello React</title>
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+
+    <!-- permet de compiler le JSX -->
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <style>
+        .heading{
+            color: purple;
+        }
+        .valid{
+          font-size: small;
+          color:red;
+        }
+    </style>
+</head>
+<body>
+<div id="root"></div>
+
+<script type="text/babel">
+
+const fields = {  email : '', password : '', auth : false, submit : false }
+const secure = { check_email : 'alan@alan.fr', check_password : '123456789'}
+
+const Message = (props) => <div className="valid">{props.content || 'error'}</div>
+
+class Login extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {...fields};
+  }
+
+  handleChange = (event) => {
+    const { name, value } = event.target;
+    this.setState({ [name]: value }) ;
+  }
+
+  handleSubmit = (event) => {
+    event.preventDefault();
+
+    this.setState({submit : true});
+
+    const { check_email , check_password } = secure;
+    const { email, password } = this.state;
+
+    if ( email === check_email && password === check_password){
+      
+      this.setState({
+        auth : true,
+        email : email,
+      });
+      console.log('success')
+    }else{
+      const reset = { password : '', auth : false}
+      this.setState({...reset});
+    }
+    
+  }
+
+  render() {
+
+    const {email, password, auth} = this.state;
+    const valid = email.length > 0 && password.length > 0;
+
+    return (
+    <form onSubmit={this.handleSubmit}>
+      {this.state.auth? <Message content="Success !" /> : null}
+      <div className="form-group">
+        <label htmlFor="email">Email address</label>
+        <input value={this.state.email} onChange={this.handleChange} name="email"
+        type="email" className="form-control" id="email" aria-describedby="emailHelp" placeholder="Enter email" />
+        { !this.state.auth && this.state.submit ? <Message content=" Email or password invalid" /> : null }
+      </div>
+      <div className="form-group">
+        <label htmlFor="p">Password</label>
+        <input value={this.state.password} onChange={this.handleChange} name="password" type="password" className="form-control" id="p" placeholder="Password" />
+      </div>
+      <button disabled={!valid} type="submit" className="btn btn-primary">Submit</button>
+    </form>
+    );
+  }
+}
+
+class App extends React.Component{
+  constructor(props) {
+    super(props);
+    this.state = {...fields};
+  }
+
+  render(){
+    return (
+      <div className="container">
+        <div className="row">
+          <div className="col-md-12">
+            <Login />
+          </div>
+        </div>
+      </div>
+    );
+  }
+}
+
+ReactDOM.render(
+  <App />,
+  document.getElementById('root')
+);
+
+</script>
+</body>
+
+</html>
