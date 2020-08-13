@@ -1,13 +1,11 @@
 <!DOCTYPE html>
 <html>
-
 <head>
     <meta charset="UTF-8" />
     <title>Hello React</title>
     <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
     <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
     <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
-
     <style>
         .heading{
             color: purple;
@@ -18,6 +16,7 @@
 <body>
     <div id="root"></div>
     <script type="text/babel">
+
         class ListDragon extends React.Component{
 
             render() {
@@ -50,14 +49,15 @@
 
             render(){
                 return (
-                    <div>
-                        { this.props.choice == "dragon" ? <ListDragon/> : <ListKnight/> }
-                    </div>
+                   <div>
+                    { this.props.choice ? <ListDragon /> : <ListKnight />}
+                   </div>
                 )
             }
         }
+
         ReactDOM.render(
-            <App choice="knight"/>,
+            <App choice={true} />,
             document.getElementById('root')
         );
     </script>
