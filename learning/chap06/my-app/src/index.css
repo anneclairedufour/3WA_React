@@ -57,22 +57,24 @@ body,
     font-size: 2.5rem;
 }
 
-/*=============================== MAIN CONTENT ===============================*/
+/*============================== MAIN CONTAINER ==============================*/
 
-.maincontent {
+.maincontainer{
   height: 100%;
   padding: 2rem;
+  display: flex;
 }
 
 /*=================================== LIST ===================================*/
 
 .list {
   display: inline-block;
-  width: 30rem;
+  width: 35rem;
   padding-left: 0;
   border: solid 1px grey;
-  border-radius: 1rem;
-  background-color: #b7d9ff;
+  border-top-right-radius: 1rem;
+  border-bottom-right-radius: 1rem;
+  background-color: lightgray;
   list-style-type: none;
 }
 
@@ -82,43 +84,53 @@ body,
   justify-content: space-between;
   align-items: center;
   border-bottom: solid 1px grey;
-  padding: 1rem;
+  padding: 2rem;
+  border-left: solid 1rem grey;
 }
 
 .list li:first-child {
-  border-top-left-radius: 1rem;
+  /*border-top-left-radius: 1rem;*/
   border-top-right-radius: 1rem;
 }
 
 .list li:last-child {
   border-bottom: none;
-  border-bottom-left-radius: 1rem;
+  /*border-bottom-left-radius: 1rem;*/
   border-bottom-right-radius: 1rem;
-}
-
-.list li:hover {
-  cursor: pointer;
 }
 
 .list li h2 {
   display: inline-block;
   font-size: 1.6rem;
-  color: #2a5188;
+  text-transform: uppercase;
 }
 
 .list li .badge {
-  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem 1rem;
+  font-size: 1.3rem;
+  font-weight: normal;
+  background-color: grey;
 }
 
-.title-hover {
+.li-hover {
   background-color: white;
+  border-left: solid 1rem #007BFF!important;
+  cursor: pointer;
 }
 
-.title-hover h2 {
+.li-hover h2 {
   font-weight: bold;
+  color: #007BFF;
 }
 
-.title-default {
+.li-hover .badge {
+  background-color: #007BFF!important;
+}
+
+.li-default {
   background-color: none;
 }
 

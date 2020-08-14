@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import NavBar from "./NavBar";
-import MainContent from "./MainContent";
+import MainContainer from "./MainContainer";
 import Loader from "./Loader";
-import List from "./List";
 
 class App extends Component {
     constructor(props) {
@@ -32,11 +31,9 @@ class App extends Component {
 
         return (
             <div className="app">
+                <header><NavBar /></header>
                 {this.state.loading === false ? <Loader url={this.qcmUrl} onLoad={this.onLoad} /> : null}
-                <NavBar />
-                {this.state.data && <MainContent>
-                    <List data={this.state.data} />
-                </MainContent>}
+                {this.state.data && <MainContainer data={this.state.data} />}
             </div>
         );
     }
